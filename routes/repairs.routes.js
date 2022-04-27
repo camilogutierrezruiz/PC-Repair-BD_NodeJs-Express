@@ -10,13 +10,13 @@ const {
 
 const router = express.Router();
 
-// router.route('/')
-//   .get(getAllAppointments)
-//   .post(scheduleAppointment);
+router.route('/')
+  .get(getAllAppointments)
+  .post(scheduleAppointment);
 
-// router.route('/:id')
-//   .get(getAppointmentById)
-//   .patch(updateAppointment)
-//   .delete(deleteAppointment);
+router.route('/:id')
+  .get(getAppointmentById)
+  .patch(updateAppointment)
+  .delete(deleteAppointment);
 
 module.exports = { repairsRouter: router };

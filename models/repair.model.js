@@ -3,7 +3,7 @@ const { db } = require('../utils/database');
 
 const Repair = db.define('repair', {
   id: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false,
