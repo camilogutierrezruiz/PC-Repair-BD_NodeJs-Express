@@ -1,0 +1,29 @@
+{
+  "name": "pc_repair_bd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camilogutierrezruiz/PC-Repair-BD_NodeJs-Express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/camilogutierrezruiz/PC-Repair-BD_NodeJs-Express/issues"
+  },
+  "homepage": "https://github.com/camilogutierrezruiz/PC-Repair-BD_NodeJs-Express#readme",
+  "dependencies": {
+    "express": "^4.18.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
