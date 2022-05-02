@@ -1,10 +1,16 @@
 const { Repair } = require('../models/repair.model');
+const { User } = require('../models/user.model');
 
 // Get All Appointments
 const getAllAppointments = async (req, res) => {
   try {
 
-    const appointment = await Repair.findAll();
+    const appointment = await Repair.findAll({
+      where: { status: 'pending' },
+      include: [
+        { model: User }
+      ]
+    });
     res.status(200).json({
       appointment
     });
@@ -73,7 +79,7 @@ const updateAppointment = async (req, res) => {
   }
 };
 
-// Get All Appointments
+// Delete Appointment (Change status from available to cancelled)
 const deleteAppointment = async (req, res) => {
   try {
 
