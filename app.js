@@ -9,8 +9,16 @@ const app = express();
 // Available Json
 app.use(express.json());
 
+// API base URL
+const URL_API = '/api/v1';
+
 // Endpoints after https://localhost:PORT
-app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/repairs', repairsRouter);
+app.use(`${URL_API}/users`, usersRouter);
+app.use(`${URL_API}/repairs`, repairsRouter);
+
+// Global error handler
+app.use('*', (error, req, res, next) => {
+  console.log(`Global eeror handler... ${error}`);
+});
 
 module.exports = { app };

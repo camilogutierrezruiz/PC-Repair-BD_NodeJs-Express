@@ -1,6 +1,10 @@
 const express = require('express');
-const { body } = require('express-validator');
 const { userExist } = require('../middlewares/users.middlewares');
+
+const {
+  createUserValidations,
+  checkValidations
+} = require('../middlewares/validations.middlewares');
 
 const {
   getAllUsers,
@@ -15,20 +19,18 @@ const router = express.Router();
 router.route('/')
   .get(getAllUsers)
   .post(
-    body('name')
-      .notEmpty().withMessage('Name field cannot be empty'),
-    body('email')
-      .notEmpty().withMessage('Email filed cannot be empty')
-      .isEmail().withMessage('Must be a valid email'),
-    body('password')
-      .notEmpty().withMessage('Password field cannot be empty')
-      .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
+    createUserValidations,
+    checkValidations,
     createUser
   );
 
-router.route('/:id')
-  .get(userExist, getUserById)
-  .patch(userExist, updateUser)
-  .delete(userExist, deleteUser);
+router
+  .use('/:id', userExist)
+  .route('/:id')
+  .get(getUserById)
+  .patch(updateUser)
+  .delete(deleteUser);
 
-module.exports = { usersRouter: router };
+module.exports = {
+  usersRouter: router
+};

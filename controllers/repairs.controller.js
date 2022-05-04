@@ -5,12 +5,8 @@ const { User } = require('../models/user.model');
 const getAllAppointments = async (req, res) => {
   try {
 
-    const appointment = await Repair.findAll({
-      where: { status: 'pending' },
-      include: [
-        { model: User }
-      ]
-    });
+    const { appointment } = req;
+
     res.status(200).json({
       appointment
     });
@@ -24,8 +20,8 @@ const getAllAppointments = async (req, res) => {
 const scheduleAppointment = async (req, res) => {
   try {
 
-    const { date, userId } = req.body;
-    const newAppointment = await Repair.create({ date, userId });
+    const { date, computerNumber, comments, userId } = req.body;
+    const newAppointment = await Repair.create({ date, computerNumber, comments, userId });
     res.status(201).json({
       newAppointment
     });
@@ -39,14 +35,8 @@ const scheduleAppointment = async (req, res) => {
 const getAppointmentById = async (req, res) => {
   try {
 
-    const { id } = req.params;
-    const appointment = await Repair.findOne({ where: { id } });
-    if (!appointment) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Appointment no found'
-      });
-    };
+    const { appointment } = req;
+
     res.status(200).json({
       appointment
     });
@@ -60,15 +50,9 @@ const getAppointmentById = async (req, res) => {
 const updateAppointment = async (req, res) => {
   try {
 
-    const { id } = req.params;
+    const { appointment } = req;
     const { status } = req.body;
-    const appointment = await Repair.findOne({ where: { id } });
-    if (!appointment) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Appointment cannot be found'
-      });
-    };
+
     await appointment.update({ status });
     res.status(200).json({
       status: 'success'
@@ -83,14 +67,8 @@ const updateAppointment = async (req, res) => {
 const deleteAppointment = async (req, res) => {
   try {
 
-    const { id } = req.params;
-    const appointment = await Repair.findOne({ where: { id } });
-    if (!appointment) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Cannot cancell this appointment'
-      });
-    };
+    const { appointment } = req;
+
     await appointment.update({ status: 'cancelled' });
     res.status(200).json({
       status: 'success'

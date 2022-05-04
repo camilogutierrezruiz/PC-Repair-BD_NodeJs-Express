@@ -19,7 +19,9 @@ User.hasMany(Repair);
 Repair.belongsTo(User);
 
 // Sync Sequiliize Models
-db.sync()
+db.sync(
+  // { force: true }
+)
   .then(() => console.log('Database synced'))
   .catch(err => console.log(err));
 

@@ -1,4 +1,3 @@
-const { validationResult } = require('express-validator');
 const { User } = require('../models/user.model');
 
 // Get all Users
@@ -20,20 +19,6 @@ const createUser = async (req, res) => {
   try {
 
     const { name, email, password, role } = req.body;
-
-    // Validation => Login / User create Fields
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-      const messages = error.array().map(err => {
-        return err.msg;
-      });
-      const errMsgs = messages.join('. ');
-      console.log(error.array());
-      return res.status(400).json({
-        status: 'error',
-        message: errMsgs,
-      });
-    };
 
     const newUser = await User.create({ name, email, password, role });
     res.status(201).json({
