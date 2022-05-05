@@ -1,83 +1,63 @@
 const { Repair } = require('../models/repair.model');
-const { User } = require('../models/user.model');
+const { catchAsync } = require('../utils/catchAsync');
 
 // Get All Appointments
-const getAllAppointments = async (req, res) => {
-  try {
+const getAllAppointments = catchAsync(async (req, res, next) => {
 
-    const { appointment } = req;
+  const { appointment } = req;
 
-    res.status(200).json({
-      appointment
-    });
+  res.status(200).json({
+    appointment
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 // Schedule new Appointment
-const scheduleAppointment = async (req, res) => {
-  try {
+const scheduleAppointment = catchAsync(async (req, res, next) => {
 
-    const { date, computerNumber, comments, userId } = req.body;
-    const newAppointment = await Repair.create({ date, computerNumber, comments, userId });
-    res.status(201).json({
-      newAppointment
-    });
+  const { date, computerNumber, comments, userId } = req.body;
+  const newAppointment = await Repair.create({ date, computerNumber, comments, userId });
+  res.status(201).json({
+    newAppointment
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 // Get Appointmet by ID
-const getAppointmentById = async (req, res) => {
-  try {
+const getAppointmentById = catchAsync(async (req, res, next) => {
 
-    const { appointment } = req;
+  const { appointment } = req;
 
-    res.status(200).json({
-      appointment
-    });
+  res.status(200).json({
+    appointment
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 // Update Appointment repair status (status from pending to completed)
-const updateAppointment = async (req, res) => {
-  try {
+const updateAppointment = catchAsync(async (req, res, next) => {
 
-    const { appointment } = req;
-    const { status } = req.body;
+  const { appointment } = req;
+  const { status } = req.body;
 
-    await appointment.update({ status });
-    res.status(200).json({
-      status: 'success'
-    });
+  await appointment.update({ status });
+  res.status(200).json({
+    status: 'success'
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 // Delete Appointment (Change status from available to cancelled)
-const deleteAppointment = async (req, res) => {
-  try {
+const deleteAppointment = catchAsync(async (req, res, next) => {
 
-    const { appointment } = req;
+  const { appointment } = req;
 
-    await appointment.update({ status: 'cancelled' });
-    res.status(200).json({
-      status: 'success'
-    });
+  await appointment.update({ status: 'cancelled' });
+  res.status(200).json({
+    status: 'success'
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 module.exports = {
   getAllAppointments,

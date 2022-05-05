@@ -1,10 +1,16 @@
 const express = require('express');
+const cors = require('cors');
+const { globalErrorHandler } = require('./controllers/errors.controller');
 
 // Routers from Routers
 const { usersRouter } = require('./routes/users.routes');
 const { repairsRouter } = require('./routes/repairs.routes');
 
+// Init express app
 const app = express();
+
+// Enable CORS
+app.use(cors());
 
 // Available Json
 app.use(express.json());
@@ -17,8 +23,6 @@ app.use(`${URL_API}/users`, usersRouter);
 app.use(`${URL_API}/repairs`, repairsRouter);
 
 // Global error handler
-app.use('*', (error, req, res, next) => {
-  console.log(`Global eeror handler... ${error}`);
-});
+app.use('*', globalErrorHandler);
 
 module.exports = { app };

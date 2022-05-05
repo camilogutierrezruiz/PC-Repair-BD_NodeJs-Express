@@ -15,7 +15,6 @@ const Repair = db.define('repair', {
   computerNumber: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
   },
   comments: {
     type: DataTypes.STRING,

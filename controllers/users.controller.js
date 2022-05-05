@@ -1,37 +1,30 @@
 const { User } = require('../models/user.model');
+const { catchAsync } = require('../utils/catchAsync');
 
 // Get all Users
-const getAllUsers = async (req, res) => {
-  try {
+const getAllUsers = catchAsync(async (req, res, next) => {
 
-    const users = await User.findAll();
-    res.status(200).json({
-      users
-    });
+  const users = await User.findAll();
+  res.status(200).json({
+    users
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 // Create new User (client / employee)
-const createUser = async (req, res) => {
-  try {
+const createUser = catchAsync(async (req, res, next) => {
 
-    const { name, email, password, role } = req.body;
+  const { name, email, password, role } = req.body;
 
-    const newUser = await User.create({ name, email, password, role });
-    res.status(201).json({
-      newUser
-    });
+  const newUser = await User.create({ name, email, password, role });
+  res.status(201).json({
+    newUser
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 // Get User by ID
-const getUserById = async (req, res) => {
+const getUserById = async (req, res, next) => {
   try {
 
     const { user } = req;
@@ -46,38 +39,30 @@ const getUserById = async (req, res) => {
 };
 
 // Update User (name / email) by ID
-const updateUser = async (req, res) => {
-  try {
+const updateUser = catchAsync(async (req, res, next) => {
 
-    const { user } = req;
-    const { name, email } = req.body;
+  const { user } = req;
+  const { name, email } = req.body;
 
-    await user.update({ name, email });
-    res.status(200).json({
-      name,
-      email
-    });
+  await user.update({ name, email });
+  res.status(200).json({
+    name,
+    email
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 // Delete User (change status from available to unavailable)
-const deleteUser = async (req, res) => {
-  try {
+const deleteUser = catchAsync(async (req, res, next) => {
 
-    const { user } = req;
+  const { user } = req;
 
-    await user.update({ status: 'unavailable' });
-    res.status(200).json({
-      status: 'success'
-    });
+  await user.update({ status: 'unavailable' });
+  res.status(200).json({
+    status: 'success'
+  });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
 module.exports = {
   getAllUsers,
